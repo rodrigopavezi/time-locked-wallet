@@ -14,10 +14,11 @@ A simple Dapp for locking ERC20 or ETH tokens in contract as per the lock time s
 ### To Develop
 
 2.  Run `yarn` to install all the dependencies
-3.  Once installation is complete, `cd` into your app's directory and run `yarn chain` or `npm run chain` to start a local hardhat environment
+3.  Once installation is complete, `cd` into your app's directory and run `yarn chain` to start a local hardhat environment
 4.  Open another terminal and `cd` into your app's directory
-5.  Run `yarn deploy` or `npm run deploy` to deploy the example contract locally
-6.  Run `yarn dev` or `npm run dev` to start your FrontEnd dev environment
+5.  Run `yarn deploy` to deploy the example contract locally
+6.  Run `yarn dev` to start your FrontEnd dev environment
+7.  Run `yarn test` to run tests of the smart contracts
 
 ## Technologies
 
