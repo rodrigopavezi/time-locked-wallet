@@ -17,7 +17,7 @@ typechain
 cache
 artifacts
 /packages/backend/node_modules
-/packages/backend/deployments/\*
+/packages/backend/deployments/
 
 # Foundry files
 
@@ -48,7 +48,7 @@ packages/frontend/.next/
 
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log\*
+yarn-error.log
 
 # local env files
 

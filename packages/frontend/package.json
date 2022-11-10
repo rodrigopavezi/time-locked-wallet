@@ -10,11 +10,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@biconomy/mexa": "^3.0.4",
     "@rainbow-me/rainbowkit": "^0.7.4",
     "ethers": "^5.7.2",
     "next": "^13.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "request": "^2.88.2",
     "wagmi": "^0.7.13"
   },
   "devDependencies": {

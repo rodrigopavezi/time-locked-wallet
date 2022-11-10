@@ -1,23 +1,33 @@
-import '@nomiclabs/hardhat-waffle';
-import * as dotenv from 'dotenv';
-import { HardhatUserConfig } from 'hardhat/config';
-import 'hardhat-deploy';
-import '@nomiclabs/hardhat-ethers';
-import '@nomiclabs/hardhat-etherscan';
+import "@nomiclabs/hardhat-waffle";
+import * as dotenv from "dotenv";
+import { HardhatUserConfig } from "hardhat/config";
+import "hardhat-deploy";
+import "@nomiclabs/hardhat-ethers";
+import "@nomiclabs/hardhat-etherscan";
 
-dotenv.config({ path: '../../.env' });
-const defaultNetwork = 'localhost';
+dotenv.config({ path: "../../.env" });
+const defaultNetwork = "goerli";
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 const config: HardhatUserConfig = {
-  solidity: '0.8.10',
+  solidity: "0.8.17",
   defaultNetwork,
 
   networks: {
     localhost: {
       chainId: 31337,
+    },
+    hardhat: {
+      forking: {
+        url: `https://eth-goerli.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
+        blockNumber: 5858652,
+      },
+      accounts: {
+        accountsBalance: "1000000000000000000000000", //1 million ETH to signers
+      },
+      gasPrice: 1000000000,
     },
 
     /////////
@@ -45,12 +55,11 @@ const config: HardhatUserConfig = {
     //   url: `https://rinkeby.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
     //   accounts: [`${process.env.PRIVATE_KEY}`],
     // },
-    // goerli: {
-    //   chainId: 5,
-    //   url: `https://eth-goerli.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
-    //   url: `https://goerli.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_ID}`,
-    //   accounts: [`${process.env.PRIVATE_KEY}`],
-    // },
+    goerli: {
+      chainId: 5,
+      url: `https://eth-goerli.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
+      accounts: [`${process.env.PRIVATE_KEY}`],
+    },
     // kovan: {
     //   chainId: 42,
     //   url: `https://eth-kovan.alchemyapi.io/v2/${process.env.NEXT_PUBLIC_ALCHEMY_ID}`,
@@ -78,14 +87,14 @@ const config: HardhatUserConfig = {
     //   accounts: [`${process.env.PRIVATE_KEY}`],
     // },
   },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  },
   namedAccounts: {
     deployer: {
       default: 0, // here this will by default take the first account as deployer
     },
     tokenOwner: 1,
-    etherscan: {
-      apiKey: process.env.ETHERSCAN_API_KEY as string,
-    },
   },
 };
 

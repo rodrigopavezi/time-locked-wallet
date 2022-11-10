@@ -1,2 +1,3 @@
-export { GetGreeter } from './GetGreeter';
-export { SetGreeter } from './SetGreeter';
+export { Balance } from "./Balance";
+export { Deposit } from "./Deposit";
+export { Claim } from "./Claim";

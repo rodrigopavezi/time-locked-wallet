@@ -27,6 +27,7 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@opengsn/contracts": "^3.0.0-beta.1",
     "dotenv": "^16.0.0"
   }
 }
