@@ -2,8 +2,18 @@ import Head from "next/head";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Balance, Claim, Deposit } from "../components/contract";
+import { useState } from "react";
+import contracts from "@/contracts/hardhat_contracts.json";
+import { NATIVE_TOKEN_ADRESS, NETWORK_ID } from "@/config";
 
 export default function Home() {
+  const chainId = Number(NETWORK_ID);
+
+  const [tokenAddress, setTokenAddress] = useState("");
+  const allContracts = contracts as any;
+
+  const testUSDCAddress = allContracts[chainId][0].contracts.TestUSDC.address;
+
   return (
     <div className={""}>
       <Head>
@@ -25,9 +35,17 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        <Balance />
-        <Deposit />
-        <Claim />
+        <select
+          value={tokenAddress}
+          onChange={(e) => setTokenAddress(e.target.value)}
+        >
+          <option value="">Select a Token</option>
+          <option value={NATIVE_TOKEN_ADRESS}>ETH</option>
+          <option value={testUSDCAddress}>TestUSDC</option>
+        </select>
+        <Balance tokenAddress={tokenAddress} />
+        <Deposit tokenAddress={tokenAddress} />
+        <Claim tokenAddress={tokenAddress} />
       </main>
     </div>
   );

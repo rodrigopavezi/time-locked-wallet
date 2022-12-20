@@ -6,7 +6,7 @@ import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-etherscan";
 
 dotenv.config({ path: "../../.env" });
-const defaultNetwork = "hardhat";
+const defaultNetwork = "goerli";
 
 /**
  * @type import('hardhat/config').HardhatUserConfig

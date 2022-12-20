@@ -5,7 +5,7 @@ import contracts from "@/contracts/hardhat_contracts.json";
 import { NETWORK_ID } from "@/config";
 import { ethers } from "ethers";
 
-export const Balance = () => {
+export const Balance = ({ tokenAddress }: { tokenAddress: string }) => {
   const chainId = Number(NETWORK_ID);
   const [balance, setBalance] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,7 @@ export const Balance = () => {
   const fetchData = useCallback(async () => {
     try {
       const balance = await timeLockedWalletContract?.balances(
-        "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+        tokenAddress,
         address
       );
       setBalance(Number(ethers.utils.formatEther(balance)));
@@ -38,13 +38,13 @@ export const Balance = () => {
       setError("Contract couldn't be fetched.  Please check your network.");
     }
     setLoading(false);
-  }, [timeLockedWalletContract]);
+  }, [timeLockedWalletContract, tokenAddress]);
 
   useEffect(() => {
-    if (provider) {
+    if (provider && tokenAddress !== "") {
       fetchData();
     }
-  }, [provider, timeLockedWalletContract, fetchData]);
+  }, [provider, timeLockedWalletContract, fetchData, tokenAddress]);
 
   if (loading) {
     return <div>Loading...</div>;

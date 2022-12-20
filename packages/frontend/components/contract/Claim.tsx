@@ -6,11 +6,9 @@ import { NETWORK_ID } from "@/config";
 import { useMetaContract } from "@/hooks";
 import { ethers } from "ethers";
 
-export const Claim = () => {
+export const Claim = ({ tokenAddress }: { tokenAddress: string }) => {
   const chainId = Number(NETWORK_ID);
-  const [tokenAddress, setTokenAddress] = useState(
-    "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-  );
+
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -26,12 +24,6 @@ export const Claim = () => {
     allContracts[chainId][0].contracts.TimeLockedWallet.address;
   const timeLockedWalletABI =
     allContracts[chainId][0].contracts.TimeLockedWallet.abi;
-
-  const timeLockedWalletContract = useContract({
-    address: timeLockedWalletAddress,
-    abi: timeLockedWalletABI,
-    signerOrProvider: signerData,
-  });
 
   useEffect(() => {
     if (signerData) {
@@ -54,7 +46,7 @@ export const Claim = () => {
         timeLockedWalletABI,
         address as string,
         "claim",
-        ["0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", amountInWei]
+        [tokenAddress, amountInWei]
       );
       setAmount(0);
       setLoading(false);

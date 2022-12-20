@@ -1,5 +1,5 @@
 import { Biconomy } from "@biconomy/mexa";
-import { ContractInterface, ethers } from "ethers";
+import { BigNumber, ContractInterface, ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { ExternalProvider } from "@ethersproject/providers";
 import { useSigner } from "wagmi";
@@ -19,6 +19,8 @@ export const useMetaContract = () => {
     const timeLockedWalletAddress =
       allContracts[chainId][0].contracts.TimeLockedWallet.address;
 
+    const testUSDCAddress = allContracts[chainId][0].contracts.TestUSDC.address;
+
     if (signer?.provider) {
       setLoading(true);
       const biconomy = new Biconomy(
@@ -26,7 +28,7 @@ export const useMetaContract = () => {
         {
           apiKey,
           debug: true,
-          contractAddresses: [timeLockedWalletAddress],
+          contractAddresses: [timeLockedWalletAddress, testUSDCAddress],
         }
       );
 
@@ -45,15 +47,19 @@ export const useMetaContract = () => {
     contractAbi: ContractInterface,
     userAddress: string,
     methodName: string,
-    attr: Array<unknown>
+    attr: Array<unknown>,
+    batchId: number = 0
   ): Promise<
     { msg: string; id: string; hash: string; receipt: string } | any
   > => {
+    console.log("contractAddress", contractAddress);
     const contract = new ethers.Contract(
       contractAddress,
       contractAbi,
       biconomy?.ethersProvider
     );
+
+    console.log("contract", contract);
 
     // Create your target method signature.
     const { data } = await contract.populateTransaction[methodName](...attr);
@@ -65,6 +71,7 @@ export const useMetaContract = () => {
       to: contractAddress,
       from: userAddress,
       signatureType: "EIP712_SIGN",
+      batchId,
     };
 
     // add this because Biconomy contract is expecting a different domainName in production
